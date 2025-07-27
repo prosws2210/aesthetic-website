@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>String Builder - Crafting Digital Excellence</title>
+    
+    <!-- Google Font: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* === GLOBAL RESET & AESTHETIC VARIABLES === */
+        :root {
+            --primary-color: #8A2BE2; /* Vibrant Purple */
+            --secondary-color: #C778DD; /* Soft Lavender */
+            --dark-color: #240046;   /* Deep Indigo */
+            --light-color: #FFFFFF;
+            --text-color: #EAE6F0; /* Off-white for readability on gradient */
+            --card-bg-color: rgba(255, 255, 255, 0.05);
+            --glow-color: #FF00FF; /* Magenta for glow effects */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(45deg, #240046, #5a189a, #9d4edd, #c778dd);
+            background-size: 400% 400%;
+            animation: gradientBG 18s ease infinite;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+
+        /* === CUSTOM SCROLLBAR === */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--dark-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+
+        /* === NAVBAR (Glassmorphism) === */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transition: top 0.3s ease-in-out;
+        }
+
+        .navbar {
+            max-width: 1300px;
+            margin: auto;
+            padding: 1rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 2rem;
+            color: var(--light-color);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-links a {
+            margin-left: 2.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: color 0.3s, text-shadow 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--light-color);
+            text-shadow: 0 0 8px var(--secondary-color);
+        }
+
+        /* === HERO WITH GLOWING TEXT === */
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            background: transparent;
+        }
+
+        .hero h2 {
+            font-size: 4.5rem;
+            color: var(--light-color);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(200, 120, 221, 0.4);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-top: 1rem;
+            color: var(--text-color);
+            font-weight: 300;
+        }
+
+        /* === SECTIONS & FADE-IN ANIMATION === */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--light-color);
+        }
+
+        /* === ABOUT SECTION === */
+        .about p {
+            font-size: 1.15rem;
+            text-align: center;
+            max-width: 850px;
+            margin: auto;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* === SERVICES WITH GLOWING 3D CARDS === */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3.5rem;
+        }
+
+        .service-card {
+            background: var(--card-bg-color);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            transform-style: preserve-3d;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .service-card:hover {
+            transform: perspective(1200px) rotateY(5deg) scale(1.05);
+            box-shadow: 0 0 35px rgba(0,0,0,0.3), 0 0 15px var(--glow-color);
+            border-color: rgba(255, 0, 255, 0.5);
+        }
+
+        .service-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* === TEAM === */
+        .team-grid {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .member {
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .member:hover {
+            transform: translateY(-10px);
+        }
+
+        .member img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+            box-shadow: 0 0 25px rgba(200, 120, 221, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .member:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px var(--primary-color);
+        }
+
+        .member h4 {
+            margin-top: 1.5rem;
+            color: var(--light-color);
+            font-size: 1.2rem;
+        }
+
+        .member p {
+            font-size: 1rem;
+            color: var(--secondary-color);
+        }
+
+        /* === FOOTER === */
+        footer {
+            background: transparent;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 6rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p, footer a {
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+        
+        footer a:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header id="navbar">
+        <div class="navbar">
+            <h1>String Builder</h1>
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#team">Team</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Crafting Digital Excellence</h2>
+            <p>Building the future of the web with innovative and elegant solutions.</p>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+        <h2>About Us</h2>
+        <p>
+            String Builder is a forward-thinking technology partner dedicated to crafting bespoke web platforms, intelligent automation, and captivating user experiences. Our passion for innovation and precision engineering empowers us to transform your complex challenges into powerful and scalable digital products.
+        </p>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+        <h2>Our Core Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Bespoke Web Development</h3>
+                <p>Creating stunning, responsive, and SEO-optimized websites with cutting-edge frameworks and a focus on exceptional performance.</p>
+            </div>
+            <div class="service-card">
+                <h3>AI & Machine Learning</h3>
+                <p>Leveraging data-driven insights, we build intelligent automation, custom chatbots, and predictive analytics to empower your business.</p>
+            </div>
+            <div class="service-card">
+                <h3>Scalable Cloud Solutions</h3>
+                <p>Architecting robust and secure infrastructure on AWS, Azure, and Google Cloud, ensuring scalability and reliability for your applications.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team">
+        <h2>Meet Our Innovators</h2>
+        <div class="team-grid">
+            <div class="member">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rajeev Kumar">
+                <h4>Rajeev Kumar</h4>
+                <p>Founder & Chief Strategist</p>
+            </div>
+            <div class="member">
+                <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Sneha Sharma">
+                <h4>Sneha Sharma</h4>
+                <p>Head of Design & UX</p>
+            </div>
+            <div class="member">
+                <img src="https://randomuser.me/api/portraits/men/43.jpg" alt="Akash Mehta">
+                <h4>Akash Mehta</h4>
+                <p>Principal Software Engineer</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        <p>© 2025 String Builder. All Rights Reserved. | <a href="mailto:contact@stringbuilder.in">contact@stringbuilder.in</a></p>
+    </footer>
+
+    <script>
+        // On-scroll animations
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Hide navbar on scroll down, show on scroll up
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight) {
+                // Scroll Down
+                navbar.style.top = '-100px'; 
+            } else {
+                // Scroll Up
+                navbar.style.top = '0';
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, false);
+    </script>
+
+</body>
+</html>
